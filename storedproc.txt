@@ -1,0 +1,11 @@
+Stored procedure for admin page
+1.viewRetailers
+2.viewProducts
+3.ApproveRetailerStatus
+   RevokeRetailerStatus
+4.UpdateProductStatus
+5.UpdateProductDetails
+6.UpdateRetailerDetails
+7.RemoveProduct
+8.RemoveRetailer
+9.AddNewRetailer

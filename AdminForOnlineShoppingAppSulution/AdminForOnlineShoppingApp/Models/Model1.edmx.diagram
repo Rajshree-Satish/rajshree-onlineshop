@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="20b116b03f5844e2a60ad64567007ff6" Name="Diagram1">
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Cart" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Category" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Order" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Product" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Retailer" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Update_Products" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.User" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MiniProject_ShopModel.Wishlist" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Cart__Prod_Id__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Cart__User_Id__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Products__Catego__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Orders__Prod_id__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Orders__Retail_i__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Orders__User_id__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Products__Retail__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Update_Pr__Prod___21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Wishlist__Prod_I__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="MiniProject_ShopModel.FK__Wishlist__User_I__286302EC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

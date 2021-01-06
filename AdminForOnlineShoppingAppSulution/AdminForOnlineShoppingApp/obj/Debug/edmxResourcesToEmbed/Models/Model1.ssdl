@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MiniProject_ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="Cart_Id" />
+    </Key>
+    <Property Name="Cart_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Id" Type="int" />
+    <Property Name="Prod_Id" Type="int" />
+    <Property Name="Prod_Quantity" Type="int" />
+    <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Category_Id" />
+    </Key>
+    <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category_Name" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_Id" />
+    </Key>
+    <Property Name="Order_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_id" Type="int" />
+    <Property Name="Prod_id" Type="int" />
+    <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Prod_Quantity" Type="int" />
+    <Property Name="Retail_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Prod_Id" />
+    </Key>
+    <Property Name="Prod_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category_Id" Type="int" />
+    <Property Name="Prod_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Prod_Image" Type="nvarchar(max)" />
+    <Property Name="Prod_Description" Type="varchar(max)" />
+    <Property Name="Prod_Quantity" Type="int" />
+    <Property Name="Prod_Status" Type="varchar" MaxLength="30" />
+    <Property Name="Retail_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Retailers">
+    <Key>
+      <PropertyRef Name="Retail_Id" />
+    </Key>
+    <Property Name="Retail_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Name" Type="varchar" MaxLength="40" />
+    <Property Name="Retail_Name" Type="varchar" MaxLength="40" />
+    <Property Name="Retail_Password" Type="nvarchar" MaxLength="40" />
+    <Property Name="Retail_Phone" Type="varchar" MaxLength="40" />
+    <Property Name="Retail_Email" Type="nvarchar" MaxLength="40" />
+    <Property Name="Retail_Status" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="Update_Products">
+    <Key>
+      <PropertyRef Name="Update_Id" />
+    </Key>
+    <Property Name="Update_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Prod_Id" Type="int" />
+    <Property Name="Prod_Name" Type="varchar" MaxLength="20" />
+    <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Prod_Quantity" Type="int" />
+    <Property Name="Update_Status" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="User_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Name" Type="varchar" MaxLength="50" />
+    <Property Name="User_Password" Type="varchar" MaxLength="30" />
+    <Property Name="User_Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Phone" Type="varchar" MaxLength="15" />
+    <Property Name="User_Address" Type="varchar(max)" />
+    <Property Name="User_City" Type="varchar" MaxLength="20" />
+    <Property Name="User_Country" Type="varchar" MaxLength="30" />
+    <Property Name="User_Type" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Wishlist">
+    <Key>
+      <PropertyRef Name="Wishlist_Id" />
+    </Key>
+    <Property Name="Wishlist_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Id" Type="int" />
+    <Property Name="Prod_Id" Type="int" />
+  </EntityType>
+  <Association Name="FK__Cart__Prod_Id__2D27B809">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Prod_Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="Prod_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__User_Id__2C3393D0">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Prod_id__30F848ED">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Prod_Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Prod_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Retail_i__31EC6D26">
+    <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Retailers">
+        <PropertyRef Name="Retail_Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Retail_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__User_id__300424B4">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Catego__1DE57479">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Category_Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Category_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Retail__1ED998B2">
+    <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Retailers">
+        <PropertyRef Name="Retail_Id" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Retail_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Update_Pr__Prod___21B6055D">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Update_Products" Type="Self.Update_Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Prod_Id" />
+      </Principal>
+      <Dependent Role="Update_Products">
+        <PropertyRef Name="Prod_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Wishlist__Prod_I__29572725">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Prod_Id" />
+      </Principal>
+      <Dependent Role="Wishlist">
+        <PropertyRef Name="Prod_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Wishlist__User_I__286302EC">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_Id" />
+      </Principal>
+      <Dependent Role="Wishlist">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ApproveProductStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ApproveRetailerStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ChangeProductPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="pr" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="ChangeProductQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="qu" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteRetailers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="RevokeRetailerStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ViewOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ViewProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ViewRetailers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ViewUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="MiniProject_ShopModelStoreContainer">
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Retailers" EntityType="Self.Retailers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Update_Products" EntityType="Self.Update_Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Wishlist" EntityType="Self.Wishlist" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Cart__Prod_Id__2D27B809" Association="Self.FK__Cart__Prod_Id__2D27B809">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__User_Id__2C3393D0" Association="Self.FK__Cart__User_Id__2C3393D0">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Prod_id__30F848ED" Association="Self.FK__Orders__Prod_id__30F848ED">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Retail_i__31EC6D26" Association="Self.FK__Orders__Retail_i__31EC6D26">
+      <End Role="Retailers" EntitySet="Retailers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__User_id__300424B4" Association="Self.FK__Orders__User_id__300424B4">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Catego__1DE57479" Association="Self.FK__Products__Catego__1DE57479">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Retail__1ED998B2" Association="Self.FK__Products__Retail__1ED998B2">
+      <End Role="Retailers" EntitySet="Retailers" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Update_Pr__Prod___21B6055D" Association="Self.FK__Update_Pr__Prod___21B6055D">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Update_Products" EntitySet="Update_Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Wishlist__Prod_I__29572725" Association="Self.FK__Wishlist__Prod_I__29572725">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Wishlist" EntitySet="Wishlist" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Wishlist__User_I__286302EC" Association="Self.FK__Wishlist__User_I__286302EC">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Wishlist" EntitySet="Wishlist" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

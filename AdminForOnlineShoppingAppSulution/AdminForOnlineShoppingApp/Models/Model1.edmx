@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MiniProject_ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Cart_Id" />
+          </Key>
+          <Property Name="Cart_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Prod_Id" Type="int" />
+          <Property Name="Prod_Quantity" Type="int" />
+          <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category_Name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+          </Key>
+          <Property Name="Order_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_id" Type="int" />
+          <Property Name="Prod_id" Type="int" />
+          <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Quantity" Type="int" />
+          <Property Name="Retail_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Prod_Id" />
+          </Key>
+          <Property Name="Prod_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category_Id" Type="int" />
+          <Property Name="Prod_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Image" Type="nvarchar(max)" />
+          <Property Name="Prod_Description" Type="varchar(max)" />
+          <Property Name="Prod_Quantity" Type="int" />
+          <Property Name="Prod_Status" Type="varchar" MaxLength="30" />
+          <Property Name="Retail_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Retailers">
+          <Key>
+            <PropertyRef Name="Retail_Id" />
+          </Key>
+          <Property Name="Retail_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Name" Type="varchar" MaxLength="40" />
+          <Property Name="Retail_Name" Type="varchar" MaxLength="40" />
+          <Property Name="Retail_Password" Type="nvarchar" MaxLength="40" />
+          <Property Name="Retail_Phone" Type="varchar" MaxLength="40" />
+          <Property Name="Retail_Email" Type="nvarchar" MaxLength="40" />
+          <Property Name="Retail_Status" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Update_Products">
+          <Key>
+            <PropertyRef Name="Update_Id" />
+          </Key>
+          <Property Name="Update_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Prod_Id" Type="int" />
+          <Property Name="Prod_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Prod_Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Quantity" Type="int" />
+          <Property Name="Update_Status" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="varchar" MaxLength="50" />
+          <Property Name="User_Password" Type="varchar" MaxLength="30" />
+          <Property Name="User_Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_Phone" Type="varchar" MaxLength="15" />
+          <Property Name="User_Address" Type="varchar(max)" />
+          <Property Name="User_City" Type="varchar" MaxLength="20" />
+          <Property Name="User_Country" Type="varchar" MaxLength="30" />
+          <Property Name="User_Type" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Wishlist">
+          <Key>
+            <PropertyRef Name="Wishlist_Id" />
+          </Key>
+          <Property Name="Wishlist_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Prod_Id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Cart__Prod_Id__2D27B809">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__User_Id__2C3393D0">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Prod_id__30F848ED">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Retail_i__31EC6D26">
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="Retail_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Retail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__User_id__300424B4">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Catego__1DE57479">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Retail__1ED998B2">
+          <End Role="Retailers" Type="Self.Retailers" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="Retail_Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Retail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Update_Pr__Prod___21B6055D">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Update_Products" Type="Self.Update_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Update_Products">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__Prod_I__29572725">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__User_I__286302EC">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ApproveProductStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ApproveRetailerStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ChangeProductPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="pr" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="ChangeProductQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="qu" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteRetailers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RevokeRetailerStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ViewOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ViewProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ViewRetailers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ViewUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MiniProject_ShopModelStoreContainer">
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Update_Products" EntityType="Self.Update_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wishlist" EntityType="Self.Wishlist" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cart__Prod_Id__2D27B809" Association="Self.FK__Cart__Prod_Id__2D27B809">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__User_Id__2C3393D0" Association="Self.FK__Cart__User_Id__2C3393D0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Prod_id__30F848ED" Association="Self.FK__Orders__Prod_id__30F848ED">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Retail_i__31EC6D26" Association="Self.FK__Orders__Retail_i__31EC6D26">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__User_id__300424B4" Association="Self.FK__Orders__User_id__300424B4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Catego__1DE57479" Association="Self.FK__Products__Catego__1DE57479">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Retail__1ED998B2" Association="Self.FK__Products__Retail__1ED998B2">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Update_Pr__Prod___21B6055D" Association="Self.FK__Update_Pr__Prod___21B6055D">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Update_Products" EntitySet="Update_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__Prod_I__29572725" Association="Self.FK__Wishlist__Prod_I__29572725">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__User_I__286302EC" Association="Self.FK__Wishlist__User_I__286302EC">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MiniProject_ShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Cart_Id" />
+          </Key>
+          <Property Name="Cart_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Prod_Id" Type="Int32" />
+          <Property Name="Prod_Quantity" Type="Int32" />
+          <Property Name="Prod_Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Cart__Prod_Id__2D27B809" FromRole="Cart" ToRole="Products" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Cart__User_Id__2C3393D0" FromRole="Cart" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Catego__1DE57479" FromRole="Category" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_Id" />
+          </Key>
+          <Property Name="Order_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="Int32" />
+          <Property Name="Prod_id" Type="Int32" />
+          <Property Name="Prod_Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Quantity" Type="Int32" />
+          <Property Name="Retail_id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Orders__Prod_id__30F848ED" FromRole="Orders" ToRole="Products" />
+          <NavigationProperty Name="Retailer" Relationship="Self.FK__Orders__Retail_i__31EC6D26" FromRole="Orders" ToRole="Retailers" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__User_id__300424B4" FromRole="Orders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Prod_Id" />
+          </Key>
+          <Property Name="Prod_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Prod_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prod_Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Prod_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Prod_Quantity" Type="Int32" />
+          <Property Name="Prod_Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Retail_Id" Type="Int32" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK__Cart__Prod_Id__2D27B809" FromRole="Products" ToRole="Cart" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Products__Catego__1DE57479" FromRole="Products" ToRole="Category" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Prod_id__30F848ED" FromRole="Products" ToRole="Orders" />
+          <NavigationProperty Name="Retailer" Relationship="Self.FK__Products__Retail__1ED998B2" FromRole="Products" ToRole="Retailers" />
+          <NavigationProperty Name="Update_Products" Relationship="Self.FK__Update_Pr__Prod___21B6055D" FromRole="Products" ToRole="Update_Products" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK__Wishlist__Prod_I__29572725" FromRole="Products" ToRole="Wishlist" />
+        </EntityType>
+        <EntityType Name="Retailer">
+          <Key>
+            <PropertyRef Name="Retail_Id" />
+          </Key>
+          <Property Name="Retail_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Retail_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Retail_Password" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Retail_Phone" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Retail_Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Retail_Status" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Retail_i__31EC6D26" FromRole="Retailers" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Retail__1ED998B2" FromRole="Retailers" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Update_Products">
+          <Key>
+            <PropertyRef Name="Update_Id" />
+          </Key>
+          <Property Name="Update_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prod_Id" Type="Int32" />
+          <Property Name="Prod_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Prod_Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Prod_Quantity" Type="Int32" />
+          <Property Name="Update_Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Update_Pr__Prod___21B6055D" FromRole="Update_Products" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="User_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="User_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="User_City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="User_Country" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="User_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK__Cart__User_Id__2C3393D0" FromRole="Users" ToRole="Cart" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__User_id__300424B4" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK__Wishlist__User_I__286302EC" FromRole="Users" ToRole="Wishlist" />
+        </EntityType>
+        <EntityType Name="Wishlist">
+          <Key>
+            <PropertyRef Name="Wishlist_Id" />
+          </Key>
+          <Property Name="Wishlist_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Prod_Id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Wishlist__Prod_I__29572725" FromRole="Wishlist" ToRole="Products" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Wishlist__User_I__286302EC" FromRole="Wishlist" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Cart__Prod_Id__2D27B809">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__User_Id__2C3393D0">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Catego__1DE57479">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Prod_id__30F848ED">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Retail_i__31EC6D26">
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="Retail_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Retail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__User_id__300424B4">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Retail__1ED998B2">
+          <End Role="Retailers" Type="Self.Retailer" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Retailers">
+              <PropertyRef Name="Retail_Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Retail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Update_Pr__Prod___21B6055D">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Update_Products" Type="Self.Update_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Update_Products">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__Prod_I__29572725">
+          <End Role="Products" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Prod_Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="Prod_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__User_I__286302EC">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MiniProject_ShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Retailers" EntityType="Self.Retailer" />
+          <EntitySet Name="Update_Products" EntityType="Self.Update_Products" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Wishlists" EntityType="Self.Wishlist" />
+          <AssociationSet Name="FK__Cart__Prod_Id__2D27B809" Association="Self.FK__Cart__Prod_Id__2D27B809">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__User_Id__2C3393D0" Association="Self.FK__Cart__User_Id__2C3393D0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Catego__1DE57479" Association="Self.FK__Products__Catego__1DE57479">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Prod_id__30F848ED" Association="Self.FK__Orders__Prod_id__30F848ED">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Retail_i__31EC6D26" Association="Self.FK__Orders__Retail_i__31EC6D26">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__User_id__300424B4" Association="Self.FK__Orders__User_id__300424B4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Retail__1ED998B2" Association="Self.FK__Products__Retail__1ED998B2">
+            <End Role="Retailers" EntitySet="Retailers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Update_Pr__Prod___21B6055D" Association="Self.FK__Update_Pr__Prod___21B6055D">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Update_Products" EntitySet="Update_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__Prod_I__29572725" Association="Self.FK__Wishlist__Prod_I__29572725">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Wishlist" EntitySet="Wishlists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__User_I__286302EC" Association="Self.FK__Wishlist__User_I__286302EC">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Wishlist" EntitySet="Wishlists" />
+          </AssociationSet>
+          <FunctionImport Name="ApproveProductStatus">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ApproveRetailerStatus">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeProductPrice">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="pr" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeProductQuantity">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="qu" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProduct">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteRetailers">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RevokeRetailerStatus">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ViewProducts" ReturnType="Collection(MiniProject_ShopModel.ViewProducts_Result)" />
+          <FunctionImport Name="ViewRetailers" ReturnType="Collection(MiniProject_ShopModel.ViewRetailers_Result)" />
+          <FunctionImport Name="ViewUsers" ReturnType="Collection(MiniProject_ShopModel.ViewUsers_Result)" />
+          <FunctionImport Name="ViewOrders" ReturnType="Collection(MiniProject_ShopModel.ViewOrders_Result)" />
+        </EntityContainer>
+        <ComplexType Name="ViewProducts_Result">
+          <Property Type="Int32" Name="Prod_Id" Nullable="false" />
+          <Property Type="Int32" Name="Category_Id" Nullable="true" />
+          <Property Type="String" Name="Prod_Name" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Prod_Price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Prod_Image" Nullable="true" />
+          <Property Type="String" Name="Prod_Description" Nullable="true" />
+          <Property Type="Int32" Name="Prod_Quantity" Nullable="true" />
+          <Property Type="String" Name="Prod_Status" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="Retail_Id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ViewRetailers_Result">
+          <Property Type="Int32" Name="Retail_Id" Nullable="false" />
+          <Property Type="String" Name="Company_Name" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Retail_Name" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Retail_Password" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Retail_Phone" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Retail_Email" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Retail_Status" Nullable="true" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="ViewUsers_Result">
+          <Property Type="Int32" Name="User_Id" Nullable="false" />
+          <Property Type="String" Name="User_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="User_Password" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="User_Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="User_Phone" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="User_Address" Nullable="true" />
+          <Property Type="String" Name="User_City" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="User_Country" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="User_Type" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="ViewOrders_Result">
+          <Property Type="Int32" Name="Order_Id" Nullable="false" />
+          <Property Type="Int32" Name="User_id" Nullable="true" />
+          <Property Type="Int32" Name="Prod_id" Nullable="true" />
+          <Property Type="Decimal" Name="Prod_Price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Prod_Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Retail_id" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MiniProject_ShopModelStoreContainer" CdmEntityContainer="MiniProject_ShopEntities">
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Cart_Id" ColumnName="Cart_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Prod_Id" ColumnName="Prod_Id" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Prod_id" ColumnName="Prod_id" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Retail_id" ColumnName="Retail_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Prod_Id" ColumnName="Prod_Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+                <ScalarProperty Name="Prod_Image" ColumnName="Prod_Image" />
+                <ScalarProperty Name="Prod_Description" ColumnName="Prod_Description" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Prod_Status" ColumnName="Prod_Status" />
+                <ScalarProperty Name="Retail_Id" ColumnName="Retail_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Retailers">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Retailer">
+              <MappingFragment StoreEntitySet="Retailers">
+                <ScalarProperty Name="Retail_Id" ColumnName="Retail_Id" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Retail_Name" ColumnName="Retail_Name" />
+                <ScalarProperty Name="Retail_Password" ColumnName="Retail_Password" />
+                <ScalarProperty Name="Retail_Phone" ColumnName="Retail_Phone" />
+                <ScalarProperty Name="Retail_Email" ColumnName="Retail_Email" />
+                <ScalarProperty Name="Retail_Status" ColumnName="Retail_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Update_Products">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Update_Products">
+              <MappingFragment StoreEntitySet="Update_Products">
+                <ScalarProperty Name="Update_Id" ColumnName="Update_Id" />
+                <ScalarProperty Name="Prod_Id" ColumnName="Prod_Id" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Update_Status" ColumnName="Update_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Phone" ColumnName="User_Phone" />
+                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+                <ScalarProperty Name="User_City" ColumnName="User_City" />
+                <ScalarProperty Name="User_Country" ColumnName="User_Country" />
+                <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wishlists">
+            <EntityTypeMapping TypeName="MiniProject_ShopModel.Wishlist">
+              <MappingFragment StoreEntitySet="Wishlist">
+                <ScalarProperty Name="Wishlist_Id" ColumnName="Wishlist_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Prod_Id" ColumnName="Prod_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ApproveProductStatus" FunctionName="MiniProject_ShopModel.Store.ApproveProductStatus" />
+          <FunctionImportMapping FunctionImportName="ApproveRetailerStatus" FunctionName="MiniProject_ShopModel.Store.ApproveRetailerStatus" />
+          <FunctionImportMapping FunctionImportName="ChangeProductPrice" FunctionName="MiniProject_ShopModel.Store.ChangeProductPrice" />
+          <FunctionImportMapping FunctionImportName="ChangeProductQuantity" FunctionName="MiniProject_ShopModel.Store.ChangeProductQuantity" />
+          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="MiniProject_ShopModel.Store.DeleteProduct" />
+          <FunctionImportMapping FunctionImportName="DeleteRetailers" FunctionName="MiniProject_ShopModel.Store.DeleteRetailers" />
+          <FunctionImportMapping FunctionImportName="RevokeRetailerStatus" FunctionName="MiniProject_ShopModel.Store.RevokeRetailerStatus" />
+          <FunctionImportMapping FunctionImportName="ViewProducts" FunctionName="MiniProject_ShopModel.Store.ViewProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MiniProject_ShopModel.ViewProducts_Result">
+                <ScalarProperty Name="Prod_Id" ColumnName="Prod_Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Prod_Name" ColumnName="Prod_Name" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+                <ScalarProperty Name="Prod_Image" ColumnName="Prod_Image" />
+                <ScalarProperty Name="Prod_Description" ColumnName="Prod_Description" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Prod_Status" ColumnName="Prod_Status" />
+                <ScalarProperty Name="Retail_Id" ColumnName="Retail_Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ViewRetailers" FunctionName="MiniProject_ShopModel.Store.ViewRetailers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MiniProject_ShopModel.ViewRetailers_Result">
+                <ScalarProperty Name="Retail_Id" ColumnName="Retail_Id" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Retail_Name" ColumnName="Retail_Name" />
+                <ScalarProperty Name="Retail_Password" ColumnName="Retail_Password" />
+                <ScalarProperty Name="Retail_Phone" ColumnName="Retail_Phone" />
+                <ScalarProperty Name="Retail_Email" ColumnName="Retail_Email" />
+                <ScalarProperty Name="Retail_Status" ColumnName="Retail_Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ViewUsers" FunctionName="MiniProject_ShopModel.Store.ViewUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MiniProject_ShopModel.ViewUsers_Result">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Phone" ColumnName="User_Phone" />
+                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+                <ScalarProperty Name="User_City" ColumnName="User_City" />
+                <ScalarProperty Name="User_Country" ColumnName="User_Country" />
+                <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ViewOrders" FunctionName="MiniProject_ShopModel.Store.ViewOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MiniProject_ShopModel.ViewOrders_Result">
+                <ScalarProperty Name="Order_Id" ColumnName="Order_Id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Prod_id" ColumnName="Prod_id" />
+                <ScalarProperty Name="Prod_Price" ColumnName="Prod_Price" />
+                <ScalarProperty Name="Prod_Quantity" ColumnName="Prod_Quantity" />
+                <ScalarProperty Name="Retail_id" ColumnName="Retail_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
